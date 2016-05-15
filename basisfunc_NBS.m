@@ -2,7 +2,7 @@ function N_ik = basisfunc_NBS( N, K, T )
 %basisfunc_NBS computes the basis function for Nonrational B-Splines
 %
 %   INPUT:
-%   N - number of control points minus one
+%   N - number of control points
 %       e.g. if there are 5 control points, N = 5.
 %   K - order (degree + 1) 
 %       e.g. for quadratic B-Splines, degree = 2; order K = 2 + 1 = 3.
