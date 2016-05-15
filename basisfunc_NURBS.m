@@ -2,7 +2,7 @@ function R_ik = basisfunc_NURBS( N, K, T, w )
 %basisfunc_NURBS computes the basis function for Nonuniform Rational B-Splines
 %
 %   INPUT:
-%   N - number of control points minus one
+%   N - number of control points
 %       e.g. if there are 5 control points, N = 5.
 %   K - order (degree + 1) 
 %       e.g. for quadratic B-Splines, degree = 2; order K = 2 + 1 = 3.
