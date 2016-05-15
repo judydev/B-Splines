@@ -32,13 +32,11 @@ function R_ik = basisfunc_NURBS( N, K, T, w )
 %
 %   EXAMPLE: (book P303)
 %       N = 5; K = 3; T = [0 0 0 1 2 3 3 3]; w = [1 1 .5 1 1];
-%       N_ik =  basisfunc_NURBS( N, K, T );
+%       N_ik =  basisfunc_NURBS( N, K, T, w );
 %       Result: 3-by-5 cell
-
 %
 %   Author: Di Zhu 2016-05-10
 %   ref: Curves and Surfaces for Computer Graphics, David Salomon, 2006.
-N = 5; K = 3; T = [0 0 0 1 2 3 3 3]; w = [1 1 .5 1 1];
 
 n_seg = N - (K - 1); % number of polynomial segments
 % number of polynomial segments also indicate the number of intervals
