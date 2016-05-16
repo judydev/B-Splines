@@ -7,7 +7,7 @@ function N_ik = basisfunc_NBS( N, K, T )
 %   K - order (degree + 1) 
 %       e.g. for quadratic B-Splines, degree = 2; order K = 2 + 1 = 3.
 %   T - knot vector, a nondecreasing sequence from t_0 to t_(N+K-1)
-%       e.g. for N = 4, K = 3, a knot vector can be:
+%       e.g. for N = 5, K = 3, a knot vector can be:
 %           [t0 t1 t2 t3 t4 t5 t6 t7]  -> parameters
 %           [ 0  0  0  1  2  3  3  3]  -> nonuniform
 %
