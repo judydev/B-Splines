@@ -11,7 +11,7 @@ function N_ik = basisfunc_NBS( N, K, T, fileName )
 %           [t0 t1 t2 t3 t4 t5 t6 t7]  -> parameters
 %           [ 0  0  0  1  2  3  3  3]  -> nonuniform
 %   fileName - the name of txt file to write data into
-%       e.g. fileName = 'N_ik.txt'
+%       e.g. fileName = 'N_ik'
 %
 %   OUTPUT:
 %   basis function N_ik{k,i}, 1 <= k <= K, 0 <= i <= N-1, t_K-1 <= t <= t_N
@@ -120,7 +120,8 @@ for k = 2 : K % for order k in [1,K]
 end
 
 % write the basis functions to txt file
-fid = fopen(fileName,'wt'); % delete text and rewrite file
+fid = fopen(strcat(fileName,'.txt'),'wt'); % delete text and rewrite file
+fprintf(fid, strcat(fileName,':\n'));
 for k = 1 : K % order
     fprintf(fid,'order k = %d: \n',k);
     for i = 1 : N % segment
