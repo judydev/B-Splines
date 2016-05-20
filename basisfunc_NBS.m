@@ -149,5 +149,4 @@ for k = 1 : K % order
         
     end
 end
-
-
+fclose(fid);
