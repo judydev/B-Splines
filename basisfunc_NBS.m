@@ -1,4 +1,4 @@
-function N_ik = basisfunc_NBS( N, K, T )
+function N_ik = basisfunc_NBS( N, K, T, fileName )
 %basisfunc_NBS computes the basis function for Nonrational B-Splines
 %
 %   INPUT:
@@ -10,6 +10,8 @@ function N_ik = basisfunc_NBS( N, K, T )
 %       e.g. for N = 5, K = 3, a knot vector can be:
 %           [t0 t1 t2 t3 t4 t5 t6 t7]  -> parameters
 %           [ 0  0  0  1  2  3  3  3]  -> nonuniform
+%   fileName - the name of txt file to write data into
+%       e.g. fileName = 'N_ik.txt'
 %
 %   OUTPUT:
 %   basis function N_ik{k,i}, 1 <= k <= K, 0 <= i <= N-1, t_K-1 <= t <= t_N
@@ -117,38 +119,34 @@ for k = 2 : K % for order k in [1,K]
     end 
 end
 
-% print the basis functions
-Y_N = input('Print the basis functions?(1 for printing, or else for not printing)\n');
-if Y_N == 1
-    
-    for k = 1 : K % order
-        fprintf('order k = %d: \n',k);
-        for i = 1 : N % segment
-            fprintf('N_%d%d = ',i-1,k);
-            var = 0;
-            for j = 1 : n_seg
-
-                if isnumeric( N_ik{k,i}{j} ) % if the value is a number
-                    if N_ik{k,i}{j} ~= 0 % if the function is not zero
-                        fprintf('\t%d, t=[%d,%d);', N_ik{k,i}{j}, j-1,j);
-                        var = var + 1;
-                    end
-                else
-                    fprintf('\t%s, t=[%d,%d);', char(N_ik{k,i}{j}), j-1,j);
-                    var = var + 1;
-                end    
-            end
-
-            % when the function = 0, print 0 after N_ik
-            if var == 0
-                fprintf('\t0\n');
+% write the basis functions to txt file
+fid = fopen(fileName,'wt'); % delete text and rewrite file
+for k = 1 : K % order
+    fprintf(fid,'order k = %d: \n',k);
+    for i = 1 : N % segment
+        fprintf(fid,'N_%d%d = ',i-1,k);
+        var1 = 0;
+        for j = 1 : n_seg
+            
+            if isnumeric( N_ik{k,i}{j} ) % if the value is a number
+                if N_ik{k,i}{j} ~= 0 % if the function is not zero
+                    fprintf(fid,'\t%d, t=[%d,%d);', N_ik{k,i}{j}, j-1,j);
+                    var1 = var1 + 1;
+                end
             else
-                fprintf('\n');
+                fprintf(fid,'\t%s, t=[%d,%d);', char(N_ik{k,i}{j}), j-1,j);
+                var1 = var1 + 1;
             end
-
         end
+        
+        % when the function = 0, print 0 after N_ik
+        if var1 == 0
+            fprintf(fid,'\t0\n');
+        else
+            fprintf(fid,'\n');
+        end
+        
     end
-    
 end
 
 
