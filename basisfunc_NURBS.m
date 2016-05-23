@@ -1,4 +1,4 @@
-function R_ik = basisfunc_NURBS( N, K, T, w )
+function R_ik = basisfunc_NURBS( N, K, T, t, w )
 %basisfunc_NURBS computes the basis function for Nonuniform Rational B-Splines
 %
 %   INPUT:
@@ -10,6 +10,7 @@ function R_ik = basisfunc_NURBS( N, K, T, w )
 %       e.g. for N = 5, K = 3, a knot vector can be:
 %           [t0 t1 t2 t3 t4 t5 t6 t7]  -> parameters
 %           [ 0  0  0  1  2  3  3  3]  -> nonuniform
+%   t - parameter character
 %   w - weight factors, w_i is the weight(>=0) for each control point
 %
 %   OUTPUT:
@@ -53,7 +54,7 @@ end
 
 % compute the nonrational basis functions
 try
-    N_ik = basisfunc_NBS( N, K, T );
+    N_ik = basisfunc_NBS( N, K, T, t);
 catch
     error('Wrong input for N, K, T'); % when unable to compute N_ik, return error message
 end
