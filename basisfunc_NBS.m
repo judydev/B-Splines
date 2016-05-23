@@ -1,4 +1,4 @@
-function N_ik = basisfunc_NBS( N, K, T, fileName )
+function N_ik = basisfunc_NBS( N, K, T, t, fileName )
 %basisfunc_NBS computes the basis function for Nonrational B-Splines
 %
 %   INPUT:
@@ -10,6 +10,8 @@ function N_ik = basisfunc_NBS( N, K, T, fileName )
 %       e.g. for N = 5, K = 3, a knot vector can be:
 %           [t0 t1 t2 t3 t4 t5 t6 t7]  -> parameters
 %           [ 0  0  0  1  2  3  3  3]  -> nonuniform
+%   t - parameter character, has to be of type char
+%       e.g. 't'
 %   fileName - the name of txt file to write data into
 %       e.g. fileName = 'N_ik'
 %
@@ -132,11 +134,11 @@ for k = 1 : K % order
             
             if isnumeric( N_ik{k,i}{j} ) % if the value is a number
                 if N_ik{k,i}{j} ~= 0 % if the function is not zero
-                    fprintf(fid,'\t%d, t=[%d,%d);', N_ik{k,i}{j}, j-1,j);
+                    fprintf(fid,'\t%d, %s=[%d,%d);', N_ik{k,i}{j},char(t),j-1,j);
                     var1 = var1 + 1;
                 end
             else
-                fprintf(fid,'\t%s, t=[%d,%d);', char(N_ik{k,i}{j}), j-1,j);
+                fprintf(fid,'\t%s, %s=[%d,%d);', char(N_ik{k,i}{j}),char(t),j-1,j);
                 var1 = var1 + 1;
             end
         end
