@@ -65,7 +65,7 @@ if length(T) ~= N + K
     error('Wrong number of knots');
 end
 
-syms t; % parameter t
+t = syms(char(t)); % parameter t
 N_ik = cell(K, N);      % preallocate N_ik
 n_seg = N - (K - 1); % number of polynomial segments
 % number of polynomial segments also indicate the number of intervals
