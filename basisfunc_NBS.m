@@ -74,14 +74,15 @@ n_seg = N - (K - 1); % number of polynomial segments
 % the left bound is closed and right bound is open
 
 % initiate the basis functions N_i1 for K = 1
+ind = 0;
 for i = 1 : N
-    
     % preallocate
     N_ik{1,i} = num2cell(zeros(n_seg,1));
     
     if T(i+1) > 0
         if T(i+1) - T(i) ~= 0
-            N_ik{1,i}{T(i+1)} = 1; 
+            ind = ind + 1;
+            N_ik{1,i}{ind} = 1; 
         end
     end
     
