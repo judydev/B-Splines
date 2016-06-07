@@ -57,7 +57,7 @@ function [ N_ik ] = basisfunc_NUBS( N, K, T, t, fileName )
 %         N_33 = 	(t/2 - 1/2)*(t - 1), t=[1,2);	- (t - 2)*(t - 3) - (t/2 - 1/2)*(t - 3), t=[2,3);
 %         N_43 = 	(t - 2)^2, t=[2,3);
 %
-%   Author: Di Zhu 2016-05-09
+%   Author: Di Zhu 2016-06-07
 %   ref: Curves and Surfaces for Computer Graphics, David Salomon, 2006.
 
 % check inputs
