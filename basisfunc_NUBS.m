@@ -10,10 +10,11 @@ function [ N_ik ] = basisfunc_NUBS( N, K, U, u, fileName )
 %       e.g. for N = 5, K = 3, a knot vector can be:
 %           [u0 u1 u2 u3 u4 u5 u6 u7]  -> parameters
 %           [ 0  0  0  1  2  3  3  3]  -> nonuniform
-%   fileName - the name of txt file to write data into
-%       e.g. fileName = 'N_ik'
 %   u - parameter character
 %       e.g. 'u'
+%   fileName - the name of txt file to write data into. or leave blank if
+%              do not need to write to file
+%       e.g. fileName = 'N_ik'
 %
 %   OUTPUT:
 %   basis function N_ik{k,i}, 1 <= k <= K, 0 <= i <= N-1, u_K-1 <= u <= u_N
@@ -46,7 +47,7 @@ if length(U) ~= N + K
     error('Wrong number of knots');
 end
 
-u = sym(u); % parameter t
+u = sym(u); % parameter u
 N_ik = cell(K, N+K-1);      % preallocate N_ik
 n_seg = N - (K - 1); % number of polynomial segments
 % number of polynomial segments also indicate the number of intervals
@@ -104,43 +105,44 @@ for k = 2 : K % for order k in [1,K]
     end 
 end
 
-% write the basis functions to txt file
-fid = fopen(strcat(fileName,'.txt'),'wt'); % delete text and rewrite file
-fprintf(fid, strcat(fileName,':\n'));
-fprintf(fid,'Number of control points = %d\n',N);
-fprintf(fid,'Order K = %d, degree p = %d\n',K,K-1);
-fprintf(fid,'Knot vector T = {');
-for i = 1 : length(U)
-     fprintf(fid,' %d',U(i));
-end
-fprintf(fid,' }\n\n');
-
-for k = 1 : K % order
-    fprintf(fid,'degree p = %d: \n',k-1);
-    for i = 1 : ( N + K - k) % segment
-        fprintf(fid,'N_%d%d = ',i-1,k-1);
-        var1 = 0;
-        for j = 1 : n_seg
-            
-            if isnumeric( N_ik{k,i}{j} ) % if the value is a number
-                if N_ik{k,i}{j} ~= 0 % if the function is not zero
-                    fprintf(fid,'\t%d, %s=[%d,%d);', N_ik{k,i}{j},char(u),j-1,j);
+if nargin == 5
+    % write the basis functions to txt file
+    fid = fopen(strcat(fileName,'.txt'),'wt'); % delete text and rewrite file
+    fprintf(fid, strcat(fileName,':\n'));
+    fprintf(fid,'Number of control points = %d\n',N);
+    fprintf(fid,'Order K = %d, degree p = %d\n',K,K-1);
+    fprintf(fid,'Knot vector T = {');
+    for i = 1 : length(U)
+        fprintf(fid,' %d',U(i));
+    end
+    fprintf(fid,' }\n\n');
+    
+    for k = 1 : K % order
+        fprintf(fid,'degree p = %d: \n',k-1);
+        for i = 1 : ( N + K - k) % segment
+            fprintf(fid,'N_%d%d = ',i-1,k-1);
+            var1 = 0;
+            for j = 1 : n_seg
+                
+                if isnumeric( N_ik{k,i}{j} ) % if the value is a number
+                    if N_ik{k,i}{j} ~= 0 % if the function is not zero
+                        fprintf(fid,'\t%d, %s=[%d,%d);', N_ik{k,i}{j},char(u),j-1,j);
+                        var1 = var1 + 1;
+                    end
+                else
+                    fprintf(fid,'\t%s, %s=[%d,%d);', char(N_ik{k,i}{j}),char(u),j-1,j);
                     var1 = var1 + 1;
                 end
-            else
-                fprintf(fid,'\t%s, %s=[%d,%d);', char(N_ik{k,i}{j}),char(u),j-1,j);
-                var1 = var1 + 1;
             end
+            
+            % when the function = 0, print 0 after N_ik
+            if var1 == 0
+                fprintf(fid,'\t0\n');
+            else
+                fprintf(fid,'\n');
+            end
+            
         end
-        
-        % when the function = 0, print 0 after N_ik
-        if var1 == 0
-            fprintf(fid,'\t0\n');
-        else
-            fprintf(fid,'\n');
-        end
-        
     end
+    fclose(fid);
 end
-fclose(fid);
-    
