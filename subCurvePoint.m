@@ -10,6 +10,8 @@ function P = subCurvePoint(CP,K,N_ik,u,uu)
 %
 %   OUTPUT:
 %   P - coordinates of the point on curve corresponding to the given uu
+%
+%   Author: Di Zhu 2016-06-09
 
 % %let Pn = P0. ignore if P is closed already
 % if CP(1,:) == CP(end,:) 
