@@ -130,7 +130,7 @@ if nargin == 5
                         var1 = var1 + 1;
                     end
                 else
-                    fprintf(fid,'\t%s, %s=[%d,%d);', char(N_ik{k,i}{j}),char(u),j-1,j);
+                    fprintf(fid,'\t%s, %s=[%d,%d);', char(simplify(N_ik_m{k,i}{j})),char(u),j-1,j);
                     var1 = var1 + 1;
                 end
             end
