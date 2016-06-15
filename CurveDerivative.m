@@ -1,4 +1,4 @@
-function PD = subCurveDerivative(CP,U,u,uu)
+function PD = CurveDerivative(CP,U,u,uu)
 % clamped B-Spline curve derivative
 %
 %   INPUT:
