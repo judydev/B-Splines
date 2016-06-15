@@ -3,7 +3,7 @@ function [C] = closed_NUBS(CP,K,U,u,N_ik)
 %based on given control points, order and knot vector.
 %
 %   INPUT:
-%       CP - control points (N-by-3 matrix)
+%       CP - control points (N-by-3 matrix), make sure CP_n=CP_0
 %       K - order (degree + 1)
 %       U - knot vector
 %           e.g. U = [zeros(1,K),1:(N-K),(N-K+1)*ones(1,K)]; -> uniform 
@@ -49,10 +49,7 @@ C(ind+1,:) = C(1,:); % add the first point as ending point to close the curve
 
 % for plotting
 % m = mean(P);
-% if plotswitch == 1
-%     figure,hold on,daspect([1 1 1])
-%     plot(C(:,1),C(:,2));
-%     scatter(m(:,1),m(:,2))
-%     scatter(P(:,1),P(:,2))
-% end
-
+% figure,hold on,daspect([1 1 1])
+% plot(C(:,1),C(:,2));
+% scatter(m(:,1),m(:,2))
+% scatter(P(:,1),P(:,2))
