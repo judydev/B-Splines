@@ -1,4 +1,4 @@
-function P = CurvePoint(CP,K,N_ik,u,uu)
+function P = curvePoint(CP,K,N_ik,u,uu)
 % with given u = uu, find the point on clamped B-Spline curve
 %
 %   INPUT:
