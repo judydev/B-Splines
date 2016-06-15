@@ -10,10 +10,10 @@ function [ N_ik ] = basisfunc_NUBS( N, K, U, u, fileName )
 %       e.g. for N = 5, K = 3, a knot vector can be:
 %           [u0 u1 u2 u3 u4 u5 u6 u7]  -> parameters
 %           [ 0  0  0  1  2  3  3  3]  -> nonuniform
-%   u - parameter character
+%   u(optional) - parameter character. default: 'u'
 %       e.g. 'u'
-%   fileName - the name of txt file to write data into. or leave blank if
-%              do not need to write to file
+%   fileName(optional) - the name of txt file to write data into. or leave 
+%                        blank if do not need to write to file
 %       e.g. fileName = 'N_ik'
 %
 %   OUTPUT:
@@ -47,7 +47,11 @@ if length(U) ~= N + K
     error('Wrong number of knots');
 end
 
-u = sym(u); % parameter u
+if nargin < 4
+    u = sym('u'); % parameter u
+else
+    u = sym(u);
+end
 N_ik = cell(K, N+K-1);      % preallocate N_ik
 n_seg = N - (K - 1); % number of polynomial segments
 % number of polynomial segments also indicate the number of intervals
@@ -106,12 +110,13 @@ for k = 2 : K % for order k in [1,K]
 end
 
 if nargin == 5
+    digits(4);
     % write the basis functions to txt file
     fid = fopen(strcat(fileName,'.txt'),'wt'); % delete text and rewrite file
     fprintf(fid, strcat(fileName,':\n'));
-    fprintf(fid,'Number of control points = %d\n',N);
+    fprintf(fid,'Number of control points n = %d\n',N);
     fprintf(fid,'Order K = %d, degree p = %d\n',K,K-1);
-    fprintf(fid,'Knot vector T = {');
+    fprintf(fid,'Knot vector U = {');
     for i = 1 : length(U)
         fprintf(fid,' %d',U(i));
     end
@@ -130,7 +135,7 @@ if nargin == 5
                         var1 = var1 + 1;
                     end
                 else
-                    fprintf(fid,'\t%s, %s=[%d,%d);', char(simplify(N_ik_m{k,i}{j})),char(u),j-1,j);
+                    fprintf(fid,'\t%s, %s=[%d,%d);', char(vpa(simplify(N_ik{k,i}{j}))),char(u),j-1,j);
                     var1 = var1 + 1;
                 end
             end
